@@ -1,0 +1,58 @@
+var Render = {
+    init: function (data) {
+        Render.helpers.drawEntity(data.entities.background, data.canvas.bgCtx);
+      },
+    update: function (data) {
+
+      data.canvas.fgCtx.clearRect(0, 0, data.canvas.fgCanvas.width, data.canvas.fgCanvas.height);
+      Render.helpers.drawText(data.entities.score, data.canvas.fgCtx);
+      Render.helpers.drawText2(data.entities.score, data.canvas.fgCtx);
+
+
+
+      Render.helpers.drawEntity(data.entities.jack, data.canvas.fgCtx);
+
+
+        data.entities.coinsArray.forEach(function (coin) {
+            Render.helpers.drawEntity(coin, data.canvas.fgCtx);
+        });
+
+        if(data.entities.deadCheck === true) {
+          Render.helpers.drawEnd(data.entities.score, data.canvas.fgCtx);
+          data.entities.coinsArray.splice(0, data.entities.coinsArray.length );
+        }
+
+  },
+
+    helpers: {
+        drawEntity: function (entity, ctx) {
+            ctx.drawImage(entity.sprite.img,
+                entity.sprite.srcX, entity.sprite.srcY,
+                entity.sprite.srcW, entity.sprite.srcH,
+                entity.x, entity.y,
+                entity.w, entity.h);
+        },
+
+        drawText: function (text, ctx) {
+          ctx.font = text.size + " " + text.font;
+          ctx.fillStyle = text.color;
+          ctx.fillText("Milk:" + " " + text.value, text.x, text.y);
+        },
+
+        drawText2: function (text, ctx) {
+          ctx.font = text.size + " " + text.font;
+          ctx.fillStyle = text.color;
+          ctx.fillText("Time:", 600, 70);
+        },
+
+
+        drawEnd: function (text, ctx) {
+
+          ctx.font = text.size + " " + text.font;
+          ctx.fillText(text.value, 367,295);
+        },
+
+
+
+    }
+};
